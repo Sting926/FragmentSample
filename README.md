@@ -12,6 +12,9 @@
 
 >如果使用Android3.0以下的版本，需要引入support.v4的包。
 
+##Fragment的生命周期
+![lifecycle](https://github.com/Sting926/FragmentSample/blob/master/screenshots/fragment_lifecycle.png)
+
 通常，我们的Fragment至少应实现以下生命周期方法：
 
 * onCreate()
