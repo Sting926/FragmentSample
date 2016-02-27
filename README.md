@@ -25,6 +25,8 @@
 * onPause()
 系统将此方法作为用户离开Fragment的第一个信号（但并不总是意味着此Fragment会被销毁）进行调用。 通常应该在此方法内保存一些将来需要恢复的数据（因为用户可能不会返回）。
 
+其它生命周期方法的作用在下面会讲到。
+
 ##添加到Activity
 ###使用布局
 在 Activity 的布局文件内声明Fragment
@@ -67,4 +69,35 @@ fragmentTransaction.commit();
 一旦您通过 `FragmentTransaction` 做出了更改，就必须调用 `commit()` 以使更改生效。
 
 ###管理Fragment
+要想管理您的 Activity 中的Fragment，您需要使用 `FragmentManager`。要想获取它，从 `Activity` 调用 `getFragmentManager()`。
 
+`FragmentManager` 可以执行的操作包括：
+
+- 通过 `findFragmentById()`（对于在 Activity 布局中提供 UI 的Fragment）或 `findFragmentByTag()`（对于提供或不提供 UI 的Fragment）获取 Activity 中存在的Fragment
+- 通过 `popBackStack()`（模拟用户发出的 Back 命令）将片段从返回栈中弹出
+- 通过 `addOnBackStackChangedListener()` 注册一个侦听返回栈变化的侦听器
+
+如上文所说的，也可以使用 `FragmentManager` 打开一个 `FragmentTransaction`，通过它来执行某些事务，如添加和删除Fragment。
+
+####执行Fragment事物
+在 Activity 中使用Fragment的一大优点是，可以根据用户行为对Fragment执行添加、删除、替换以及其他操作。 `commit`给 Activity 的每组更改都称为事务，FragmentTransaction 中的 API 用来执行事务。我们也可以将每个事务保存到由 Activity 管理的返回栈内，从而让用户能够回退Fragment更改（类似于回退 Activity）。
+
+下面的代码表示如何从 FragmentManager 获取一个FragmentTransaction 实例：
+~~~
+FragmentManager fragmentManager = getFragmentManager();
+FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+~~~
+事务都是原子性的，同时执行的一组更改。事物的方法都有：
+
+- add() 往Activity中添加一个Fragment
+- remove() 从Activity中移除一个Fragment
+- replace() 使用另一个Fragment替换当前的
+- hide() 隐藏当前的Fragment，仅仅是设为不可见，并不会销毁
+- show() 显示之前隐藏的Fragment
+- detach() 会将view从UI中移除,和remove()不同,此时fragment的状态依然由FragmentManager维护。
+- attach() 重建view视图，附加到UI上并显示。
+等方法为给定事务设置您想要执行的所有更改。然后，要想将事务应用到 Activity，必须调用 commit()。
+
+不过，在您调用 commit() 之前，您可能想调用 addToBackStack()，以将事务添加到片段事务返回栈。 该返回栈由 Activity 管理，允许用户通过按“返回” 按钮返回上一片段状态。
+
+例如，以下示例说明了如何将一个片段替换成另一个片段，以及如何在返回栈中保留先前状态：
