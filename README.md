@@ -34,7 +34,7 @@
 ~~~
 <fragment
     android:id="@+id/fragment"
-    android:name="com.xfdsj.fragment.MainActivityFragment"
+    android:name="com.xfdsj.fragment.FragmentOne"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"

@@ -1,30 +1,28 @@
 package com.xfdsj.fragment;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity
+    implements FragmentOne.FragmentOneAction, FragmentTwo.FragmentTwoAction {
+
+  private FragmentOne fragmentOne;
+  private FragmentTwo fragmentTwo;
+  private FragmentThree fragmentThree;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
 
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show();
-      }
-    });
+    fragmentOne = new FragmentOne();
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.add(R.id.content_main, fragmentOne);
+    fragmentTransaction.commit();
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,5 +43,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override public void ActionOne() {
+    if (fragmentTwo == null) {
+      fragmentTwo = new FragmentTwo();
+    }
+    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    fragmentTransaction.replace(R.id.content_main, fragmentTwo).addToBackStack(null).commit();
+  }
+
+  @Override public void ActionTwo() {
+    if (fragmentThree == null){
+      fragmentThree = new FragmentThree();
+    }
+    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    fragmentTransaction.replace(R.id.content_main, fragmentThree).addToBackStack(null).commit();
   }
 }
