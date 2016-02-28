@@ -116,7 +116,7 @@ FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 如果您没有在执行删除Fragment的事务时调用 addToBackStack()，则事务提交时该Fragment会被销毁，用户将无法回退到该Fragment。 不过，如果您在删除Fragment时调用了 addToBackStack()，则系统会停止该Fragment，并在用户回退时将其恢复。
 
-提示：对于每个Fragment事务，您都可以通过在提交前调用 setTransition() 来应用过渡动画。
+>提示：对于每个Fragment事务，您都可以通过在提交前调用 setTransition() 来应用过渡动画。
 
 调用 commit() 不会立即执行事务，而是在 Activity 的 UI 线程（“主”线程）可以执行该操作时再安排其在线程上运行。不过，如有必要，您也可以从 UI 线程调用 executePendingTransactions() 以立即执行 commit() 提交的事务。通常不必这样做，除非其他线程中的作业依赖该事务。
 
@@ -201,6 +201,61 @@ Fragment不可见。宿主 Activity 已停止，或Fragment已从 Activity 中�
 同样与 Activity 一样，假使 Activity 的进程被终止，而您需要在重建 Activity 时恢复Fragment状态，您也可以使用 Bundle 保留Fragment的状态。您可以在Fragment的 onSaveInstanceState() 回调期间保存状态，并可在 onCreate()、onCreateView() 或 onActivityCreated() 期间恢复状态。如需了解有关保存状态的详细信息，请参阅Activity文档。
 
 Activity 生命周期与Fragment生命周期之间的最显著差异在于它们在其各自返回栈中的存储方式。 默认情况下，Activity 停止时会被放入由系统管理的 Activity 返回栈（以便用户通过“返回” 按钮回退到Activity，任务和返回栈对此做了阐述）。不过，仅当您在删除Fragment的事务执行期间通过调用 addToBackStack() 显式请求保存实例时，系统才会将Fragment放入由宿主 Activity 管理的返回栈。
+add FragmentOne
+02-28 03:14:10.673 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onAttach;
+02-28 03:14:10.673 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onCreate;
+02-28 03:14:10.673 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onCreateView;
+02-28 03:14:10.673 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDetach;
+02-28 03:14:10.738 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onActivityCreated;
+02-28 03:14:10.738 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onStart;
+02-28 03:14:10.738 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onResume;
+replace FragmentOne with FragmentTwo and addToBackStack
+02-28 03:17:12.574 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onPause;
+02-28 03:17:12.574 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onStop;
+02-28 03:17:12.574 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDestroyView;
+02-28 03:17:12.576 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onAttach;
+02-28 03:17:12.576 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onCreate;
+02-28 03:17:12.576 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onCreateView;
+02-28 03:17:12.607 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onActivityCreated;
+02-28 03:17:12.607 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onStart;
+02-28 03:17:12.607 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onResume;
+replace FragmentTwo with FragmentThree and addToBackStack
+02-28 03:21:02.360 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onPause;
+02-28 03:21:02.360 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onStop;
+02-28 03:21:02.393 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onDestroyView;
+02-28 03:21:02.393 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onAttach;
+02-28 03:21:02.393 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onCreate;
+02-28 03:21:02.393 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onCreateView;
+02-28 03:21:02.421 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onActivityCreated;
+02-28 03:21:02.421 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onStart;
+02-28 03:21:02.421 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onResume;
+popBackStack FragmentThree
+02-28 03:22:26.012 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onPause;
+02-28 03:22:26.012 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onStop;
+02-28 03:22:26.012 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onDestroyView;
+02-28 03:22:26.013 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onDestroy;
+02-28 03:22:26.013 1909-1909/com.xfdsj.fragment E/FragmentThree@236247011: onDetach;
+02-28 03:22:26.013 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onCreateView;
+02-28 03:22:26.016 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onActivityCreated;
+02-28 03:22:26.054 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onStart;
+02-28 03:22:26.054 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onResume;
+popBackStack FragmentTwo
+02-28 03:25:44.720 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onPause;
+02-28 03:25:44.720 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onStop;
+02-28 03:25:44.720 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onDestroyView;
+02-28 03:25:44.723 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onDestroy;
+02-28 03:25:44.723 1909-1909/com.xfdsj.fragment E/FragmentTwo@532252104: onDetach;
+02-28 03:25:44.724 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onCreateView;
+02-28 03:25:44.724 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDetach;
+02-28 03:25:44.733 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onActivityCreated;
+02-28 03:25:44.733 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onStart;
+02-28 03:25:44.733 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onResume;
+popBackStack FragmentOne
+02-28 03:26:13.711 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onPause;
+02-28 03:26:14.227 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onStop;
+02-28 03:26:14.227 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDestroyView;
+02-28 03:26:14.228 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDestroy;
+02-28 03:26:14.228 1909-1909/com.xfdsj.fragment E/FragmentOne@191740966: onDetach;
 
 在其他方面，管理Fragment生命周期与管理 Activity 生命周期非常相似。 因此，管理 Activity 生命周期的做法同样适用于Fragment。 但您还需要了解 Activity 的生命周期对Fragment生命周期的影响。
 

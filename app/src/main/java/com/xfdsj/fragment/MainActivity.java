@@ -1,7 +1,6 @@
 package com.xfdsj.fragment;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,10 +18,8 @@ public class MainActivity extends Activity
     setContentView(R.layout.activity_main);
 
     fragmentOne = new FragmentOne();
-    FragmentManager fragmentManager = getFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.add(R.id.content_main, fragmentOne);
-    fragmentTransaction.commit();
+    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    fragmentTransaction.add(R.id.content_main, fragmentOne).commit();
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,10 +51,13 @@ public class MainActivity extends Activity
   }
 
   @Override public void ActionTwo() {
-    if (fragmentThree == null){
+    if (fragmentThree == null) {
       fragmentThree = new FragmentThree();
     }
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.replace(R.id.content_main, fragmentThree).addToBackStack(null).commit();
+    fragmentTransaction.hide(fragmentTwo)
+        .add(R.id.content_main, fragmentThree)
+        .addToBackStack(null)
+        .commit();
   }
 }

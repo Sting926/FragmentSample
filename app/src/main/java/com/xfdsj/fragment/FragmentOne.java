@@ -34,7 +34,6 @@ public class FragmentOne extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    LogUtils.e(this, "onDetach");
     View view = inflater.inflate(R.layout.fragment_one, container, false);
     ImageView imageView = (ImageView) view.findViewById(R.id.btn);
     imageView.setOnClickListener(new View.OnClickListener() {
