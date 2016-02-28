@@ -37,7 +37,6 @@
     android:name="com.xfdsj.fragment.FragmentOne"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:layout="@layout/fragment_main"/>
 ~~~
 `<fragment>` 中的 `android:name` 属性指定要在布局中实例化的 Fragment 类。
@@ -98,7 +97,7 @@ FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 - attach() 重建view视图，附加到UI上并显示。
 等方法为给定事务设置您想要执行的所有更改。然后，要想将事务应用到 Activity，必须调用 commit()。
 
-不过，在您调用 commit() 之前，您可能想调用 addToBackStack()，以将事务添加到Fragment事务返回栈。 该返回栈由 Activity 管理，允许用户通过按“返回” 按钮返回上一Fragment状态。
+在调用 commit() 之前，您可能想调用 addToBackStack()，以将事务添加到Fragment事务返回栈。 该返回栈由 Activity 管理，允许用户通过按“返回” 按钮返回上一Fragment状态。
 
 例如，以下示例说明了如何将一个Fragment替换成另一个Fragment，以及如何在返回栈中保留先前状态：
 ~~~

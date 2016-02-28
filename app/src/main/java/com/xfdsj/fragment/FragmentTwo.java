@@ -1,7 +1,6 @@
 package com.xfdsj.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentTwo extends Fragment {
+public class FragmentTwo extends BaseFragment {
 
   FragmentTwoAction fragmentTwoAction;
 
@@ -35,6 +34,7 @@ public class FragmentTwo extends Fragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_two, container, false);
     ImageView imageView = (ImageView) view.findViewById(R.id.btn);
     imageView.setOnClickListener(new View.OnClickListener() {
