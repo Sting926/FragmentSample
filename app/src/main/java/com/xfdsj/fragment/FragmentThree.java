@@ -1,5 +1,6 @@
 package com.xfdsj.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,24 @@ import android.widget.ImageView;
  */
 public class FragmentThree extends BaseFragment {
 
+  FragmentThreeAction fragmentThreeAction;
+
   public FragmentThree() {
   }
 
   public interface FragmentThreeAction{
     void ActionThree();
+  }
+
+  @Override public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    try {
+      if (activity instanceof FragmentThreeAction) {
+        fragmentThreeAction = (FragmentThreeAction) activity;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,7 +39,7 @@ public class FragmentThree extends BaseFragment {
     ImageView imageView = (ImageView) view.findViewById(R.id.btn);
     imageView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-
+        fragmentThreeAction.ActionThree();
       }
     });
     return view;

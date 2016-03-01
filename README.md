@@ -236,9 +236,25 @@ FragmentThree@892945888: onActivityCreated;
 FragmentThree@892945888: onStart;
 FragmentThree@892945888: onResume;
 ~~~
-FragmentTransaction的hide方法不触发Fragment的生命周期方法，所以隐藏FragmentTwo没有触发生命周期，上面的输出表明这个事物提交后只触发了添加fragmentThree的生命周期方法。
+FragmentTransaction的hide方法不触发Fragment的生命周期方法，所以隐藏FragmentTwo没有触发接下来的生命周期，上面的输出表明这个事物提交后只触发了添加fragmentThree的生命周期方法。
 
-- popBackStack FragmentThree
+- fragmentTransaction.detach(fragmentThree).addToBackStack(null).commit();
+~~~
+FragmentThree@623537138: onPause;
+FragmentThree@623537138: onStop;
+FragmentThree@623537138: onDestroyView;
+~~~
+
+- 按下返回键 popBackStack
+~~~
+FragmentThree@623537138: onCreateView;
+FragmentThree@623537138: onActivityCreated;
+FragmentThree@623537138: onStart;
+FragmentThree@623537138: onResume;
+~~~
+返回操作，恢复到detach FragmentThree的状态，FragmentThree从detach状态变为attach状态
+
+- 按下返回键 popBackStack FragmentThree被移除
 ~~~
 FragmentThree@892945888: onPause;
 FragmentThree@892945888: onStop;
@@ -250,7 +266,7 @@ FragmentThree@892945888: onDetach;
 上面讲到hide方法不触发Fragment生命周期，同理show方法也不触发Fragment生命周期。
 由于FragmentThree已经退出"历史舞台"取消与Activity关联，所以执行`onDetach`方法。
 
-- popBackStack FragmentTwo
+- 按下返回键 popBackStack FragmentTwo
 ~~~
 FragmentTwo@158406241: onPause;
 FragmentTwo@158406241: onStop;
@@ -264,7 +280,7 @@ FragmentOne@583021416: onResume;
 ~~~
 返回操作，恢复到加载FragmentTwo前的状态，则replace的逆操作`“remove FragmentTwo”` `“add FragmentOne”`
 
-- popBackStack FragmentOne
+- 按下返回键 popBackStack FragmentOne
 ~~~
 FragmentOne@583021416: onPause;
 FragmentOne@583021416: onStop;
@@ -272,7 +288,7 @@ FragmentOne@583021416: onDestroyView;
 FragmentOne@583021416: onDestroy;
 FragmentOne@583021416: onDetach;
 ~~~
-FragmentOne没有加入回退栈，Activity直接退出。
+返回操作，恢复到加载FragmentOne前的状态，没有加入回退栈，Activity直接退出。
 
 在其他方面，管理Fragment生命周期与管理 Activity 生命周期非常相似。 因此，管理 Activity 生命周期的做法同样适用于Fragment。 但您还需要了解 Activity 的生命周期对Fragment生命周期的影响。
 

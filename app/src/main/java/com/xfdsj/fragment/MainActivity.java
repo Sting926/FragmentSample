@@ -7,7 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends Activity
-    implements FragmentOne.FragmentOneAction, FragmentTwo.FragmentTwoAction {
+    implements FragmentOne.FragmentOneAction, FragmentTwo.FragmentTwoAction,
+    FragmentThree.FragmentThreeAction {
 
   private FragmentOne fragmentOne;
   private FragmentTwo fragmentTwo;
@@ -59,5 +60,10 @@ public class MainActivity extends Activity
         .add(R.id.content_main, fragmentThree)
         .addToBackStack(null)
         .commit();
+  }
+
+  @Override public void ActionThree() {
+    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    fragmentTransaction.detach(fragmentThree).addToBackStack(null).commit();
   }
 }
