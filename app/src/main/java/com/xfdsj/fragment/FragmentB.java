@@ -35,7 +35,7 @@ public class FragmentB extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.f_c, container, false);
+    View view = inflater.inflate(R.layout.f_b, container, false);
     TextView textView = (TextView) view.findViewById(R.id.tv_btn);
     textView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
