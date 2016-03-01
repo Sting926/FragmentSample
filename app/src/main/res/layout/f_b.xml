@@ -14,8 +14,8 @@
       android:layout_height="200dp"
       android:layout_centerInParent="true"
       android:gravity="center"
-      android:textColor="@color/colorAccent"
       android:text="B"
+      android:textColor="@color/colorAccent"
       android:textSize="200sp"/>
 
   <EditText
