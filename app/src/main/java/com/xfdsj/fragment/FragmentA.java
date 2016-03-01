@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,8 +35,8 @@ public class FragmentA extends BaseFragment {
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.f_a, container, false);
-    ImageView imageView = (ImageView) view.findViewById(R.id.btn);
-    imageView.setOnClickListener(new View.OnClickListener() {
+    TextView textView = (TextView) view.findViewById(R.id.tv_btn);
+    textView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (actionA != null) {
           actionA.actionA();
