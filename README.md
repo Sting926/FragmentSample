@@ -1,31 +1,18 @@
-#Fragment 总结
-##创建fragment
+#Fragment 用法总结（一）
+Fragment有点类似View，一种增强版的View，不仅可以show、hide，而且有大量的生命周期方法，处理事件，更好的和Activity交互，在显示title和content的层级界面上有独特的优势，更好的兼容适应平板和手机。下面主要分三个部分讲解Fragment的创建、生命周期和高级用法。
 
+本文主要参考官方文档并加入自己整理的内容。
+##创建fragment
 创建fragment必须要继承android.app.Fragment，还有下面几种除了Fragment基类的可扩展子类可以继承。
 
 * DialogFragment
-显示浮动对话框。使用此类创建对话框可有效地替代使用 Activity 类中的对话框帮助程序方法，因为您可以将Fragment对话框纳入由 Activity 管理的Fragment返回栈，从而使用户能够返回清除的Fragment。
+浮动对话框。使用DialogFragment创建对话框可有效地替代使用 Activity 类中的对话框帮助程序方法，因为可以将Fragment对话框纳入由 Activity 管理的Fragment返回栈，从而使用户能够返回清除的Fragment。
 * ListFragment
 显示由适配器（如 SimpleCursorAdapter）管理的一系列项目，类似于 ListActivity。它提供了几种管理列表视图的方法，如用于处理点击事件的 onListItemClick() 回调。
 * PreferenceFragment
-以列表形式显示 Preference 对象的层次结构，类似于 PreferenceActivity。这在为您的应用创建“设置” Activity 时很有用处。
+以列表形式显示 Preference 对象的层次结构，类似于 PreferenceActivity。这在为应用创建“设置” Activity 时很有用处。
 
 >如果使用Android3.0以下的版本，需要引入support.v4的包。
-
-##Fragment的生命周期
-![lifecycle](https://github.com/Sting926/FragmentSample/blob/master/screenshots/fragment_lifecycle.png)
-![lifecycle](http://i.imgur.com/fjGYjRN.png)
-
-通常，我们的Fragment至少应实现以下生命周期方法：
-
-* onCreate()
-系统会在创建Fragment时调用此方法。我们应该在这个方法里初始化那些在Fragment暂停或停止后恢复时必需保留的Fragment组件。
-* onCreateView()
-系统会在Fragment首次绘制其用户界面时调用此方法。 要想为您的Fragment绘制 UI，您从此方法中返回的 View 必须是Fragment布局的根视图。如果Fragment未提供 UI，可以返回 null。
-* onPause()
-系统将此方法作为用户离开Fragment的第一个信号（但并不总是意味着此Fragment会被销毁）进行调用。 通常应该在此方法内保存一些将来需要恢复的数据（因为用户可能不会返回）。
-
-其它生命周期方法的作用在下面会讲到。
 
 ##添加到Activity
 ###使用布局
@@ -46,29 +33,29 @@
 
 >1. 为 android:id 属性提供唯一 ID
 >2. 为 android:tag 属性提供唯一字符串
->3. 如果您未给以上两个属性提供值，系统会使用容器视图的 ID
+>3. 如果未给以上两个属性提供值，系统会使用容器视图的 ID
 
 ###动态添加
 通过编程方式将Fragment添加到某个现有 `ViewGroup`
 在 Activity 运行期间随时可以将Fragment添加到 Activity 布局中。只需指定将Fragment放入哪个 `ViewGroup`。
 
-要想在您的 Activity 中执行Fragment事务（如添加、删除或替换Fragment），您必须使用 `FragmentTransaction` 中的 API。您可以像下面这样从 `Activity` 获取一个 `FragmentTransaction` 实例：
+要想在 Activity 中执行Fragment事务（如添加、删除或替换Fragment），必须使用 `FragmentTransaction` 中的 API。可以从 `Activity` 获取一个 `FragmentTransaction` 实例：
 ~~~
 FragmentManager fragmentManager = getFragmentManager()
 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 ~~~
-然后，您可以使用 `add()` 方法添加一个Fragment，指定要添加的Fragment以及将其插入哪个视图。例如：
+然后可以使用 `add()` 方法添加一个Fragment，指定要添加的Fragment以及将其插入哪个视图。例如：
 ~~~
-ExampleFragment fragment = new ExampleFragment();
+FragmentOne fragment = new FragmentOne();
 fragmentTransaction.add(R.id.fragment_container, fragment);
 fragmentTransaction.commit();
 ~~~
 传递到 `add()` 的第一个参数是 `ViewGroup`，即应该放置Fragment的位置，由资源 ID 指定，第二个参数是要添加的Fragment。
 
-一旦您通过 `FragmentTransaction` 做出了更改，就必须调用 `commit()` 以使更改生效。
+一旦通过 `FragmentTransaction` 做出了更改，就必须调用 `commit()` 以使更改生效。
 
 ###管理Fragment
-要想管理您的 Activity 中的Fragment，您需要使用 `FragmentManager`。要想获取它，从 `Activity` 调用 `getFragmentManager()`。
+要想管理 Activity 中的Fragment，需要使用 `FragmentManager`。要想获取它，从 `Activity` 调用 `getFragmentManager()`。
 
 `FragmentManager` 可以执行的操作包括：
 
@@ -95,9 +82,9 @@ FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 - show() 显示之前隐藏的Fragment
 - detach() 会将view从UI中移除,和remove()不同,此时fragment的状态依然由FragmentManager维护。
 - attach() 重建view视图，附加到UI上并显示。
-等方法为给定事务设置您想要执行的所有更改。然后，要想将事务应用到 Activity，必须调用 commit()。
+这些方法为给定事务设置我们想要执行的所有更改。然后，要想将事务应用到 Activity，必须调用 commit()。
 
-在调用 commit() 之前，您可能想调用 addToBackStack()，以将事务添加到Fragment事务返回栈。 该返回栈由 Activity 管理，允许用户通过按“返回” 按钮返回上一Fragment状态。
+在调用 commit() 之前，我们可能会想到调用 addToBackStack()，以便将事务添加到Fragment事务返回栈。 该返回栈由 Activity 管理，允许用户通过按“返回” 按钮返回上一Fragment状态。
 
 例如，以下示例说明了如何将一个Fragment替换成另一个Fragment，以及如何在返回栈中保留先前状态：
 ~~~
@@ -107,20 +94,20 @@ FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 在上例中，`fragmentTwo` 会替换目前在 `R.id.content_main` ID 所标识的布局容器中的任何Fragment（如有）。通过调用 `addToBackStack()` 可将替换事务保存到返回栈，以便用户能够通过按“返回” 按钮撤消事务并回退到上一Fragment。
 
-如果您向事务添加了多个更改（如又一个 add() 或 remove()），并且调用了 addToBackStack()，则在调用 commit() 前应用的所有更改都将作为单一事务添加到返回栈，并且“返回” 按钮会将它们一并撤消。
+如果向事务添加了多个更改（如又一个 add() 或 remove()），并且调用了 addToBackStack()，则在调用 commit() 前应用的所有更改都将作为单一事务添加到返回栈，并且“返回” 按钮会将它们一并撤消。
 
 向 FragmentTransaction 添加更改的顺序无关紧要，不过：
 
-- 您必须最后调用 commit()
-- 如果您要向同一容器添加多个Fragment，则您添加Fragment的顺序将决定它们在视图层次结构中的出现顺序
+- 必须在最后调用 commit()
+- 如果要向同一容器添加多个Fragment，则添加Fragment的顺序将决定它们在视图层次结构中的出现顺序
 
-如果您没有在执行删除Fragment的事务时调用 addToBackStack()，则事务提交时该Fragment会被销毁，用户将无法回退到该Fragment。 不过，如果您在删除Fragment时调用了 addToBackStack()，则系统会停止该Fragment，并在用户回退时将其恢复。
+如果在执行删除Fragment的事务时没有调用 addToBackStack()，则事务提交时该Fragment会被销毁，用户将无法回退到该Fragment。 如果在删除Fragment时调用了 addToBackStack()，则系统会停止该Fragment，并在用户回退时将其恢复。
 
->提示：对于每个Fragment事务，您都可以通过在提交前调用 setTransition() 来应用过渡动画。
+>提示：对于每个Fragment事务，都可以通过在提交前调用 setTransition() 来应用过渡动画。
 
-调用 commit() 不会立即执行事务，而是在 Activity 的 UI 线程（“主”线程）可以执行该操作时再安排其在线程上运行。不过，如有必要，您也可以从 UI 线程调用 executePendingTransactions() 以立即执行 commit() 提交的事务。通常不必这样做，除非其他线程中的作业依赖该事务。
+调用 commit() 不会立即执行事务，而是在 Activity 的 UI 线程（“主”线程）可以执行该操作时再安排其在线程上运行。不过，如有必要，也可以从 UI 线程调用 executePendingTransactions() 以立即执行 commit() 提交的事务。通常不必这样做，除非其他线程中的作业依赖该事务。
 
->注意：您只能在 Activity保存其状态（用户离开 Activity）之前使用 commit() 提交事务。如果您试图在该时间点后提交，则会引发异常。 这是因为如需恢复 Activity，则提交后的状态可能会丢失。 对于丢失提交无关紧要的情况，请使用 commitAllowingStateLoss()。
+>注意：只能在 Activity保存Fragment状态（用户离开 Activity）之前使用 commit() 提交事务。如果试图在该时间点后提交，则会引发异常。 这是因为如需恢复 Activity，则提交后的状态可能会丢失。 对于丢失提交无关紧要的情况，请使用 commitAllowingStateLoss()。
 
 ##与 Activity 通信
 尽管 Fragment 是作为独立于 Activity 的对象实现，并且可在多个 Activity 内使用，但Fragment的给定实例会直接绑定到包含它的 Activity。
@@ -129,13 +116,13 @@ FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 ~~~
 View listView = getActivity().findViewById(R.id.list);
 ~~~
-同样地，您的 Activity 也可以使用 findFragmentById() 或 findFragmentByTag()，通过从 FragmentManager 获取对 Fragment 的引用来调用Fragment中的方法。例如：
+同样地，Activity 也可以使用 findFragmentById() 或 findFragmentByTag()，通过从 FragmentManager 获取对 Fragment 的引用来调用Fragment中的方法。例如：
 ~~~
 ExampleFragment fragment = (ExampleFragment) getFragmentManager().findFragmentById(R.id.example_fragment);
 ~~~
 ###创建对 Activity 的事件回调
 
-在某些情况下，您可能需要通过Fragment与 Activity 共享事件。执行此操作的一个好方法是，在Fragment内定义一个回调接口，并要求宿主 Activity 实现它。 当 Activity 通过该接口收到回调时，可以根据需要与布局中的其他Fragment共享这些信息。
+在某些情况下，可能需要通过Fragment与 Activity 共享事件。执行此操作的一个好方法是，在Fragment内定义一个回调接口，并要求宿主 Activity 实现它。 当 Activity 通过该接口收到回调时，可以根据需要与布局中的其他Fragment共享这些信息。
 
 例如，如果一个新闻应用的 Activity 有两个Fragment —一个用于显示文章列表（Fragment A），另一个用于显示文章（Fragment B）—，那么Fragment A必须在列表项被选定后告知 Activity，以便它告知Fragment B 显示该文章。 在本例中，OnArticleSelectedListener 接口在Fragment A 内声明：
 ~~~
@@ -182,8 +169,29 @@ public static class FragmentA extends ListFragment {
 ~~~
 传递到 onListItemClick() 的 id 参数是被点击项的行 ID，即 Activity（或其他Fragment）用来从应用的 ContentProvider 获取文章的 ID。
 
+#Fragment 用法总结（二）
+上一篇文章里主要讲到Fragment如何创建，如何与Activity交互，基本的API用法等。有兴趣可以先了解下Fragment 用法总结（一）。
+
+Fragment的生命周期大家都熟悉，本篇文章主要从Activity管理Fragment的角度来了解Fragment的生命周期变化，并与Activity的生命周期协调一致。
+
+##Fragment的生命周期
+![lifecycle](https://github.com/Sting926/FragmentSample/blob/master/screenshots/fragment_lifecycle.png)
+![lifecycle](http://i.imgur.com/fjGYjRN.png)
+
+通常，我们的Fragment至少应实现以下生命周期方法：
+
+* onCreate()
+系统会在创建Fragment时调用此方法。我们应该在这个方法里初始化那些在Fragment暂停或停止后恢复时必需保留的Fragment组件。
+* onCreateView()
+系统会在Fragment首次绘制其用户界面时调用此方法。 要想为Fragment绘制 UI，从此方法中返回的 View 必须是Fragment布局的根视图。如果Fragment未提供 UI，可以返回 null。
+* onPause()
+系统将此方法作为用户离开Fragment的第一个信号（但并不总是意味着此Fragment会被销毁）进行调用。 通常应该在此方法内保存一些将来需要恢复的数据（因为用户可能不会返回）。
+
+其它生命周期方法的作用在下面会讲到。
+
 ##处理Fragment生命周期
 ![activity_fragment_lifecycle](https://github.com/Sting926/FragmentSample/blob/master/screenshots/activity_fragment_lifecycle.png)
+![activity_fragment_lifecycle](http://i.imgur.com/xglLE0e.png)
 
 管理Fragment生命周期与管理 Activity 生命周期很相似。和 Activity 一样，Fragment也以三种状态存在：
 
@@ -198,9 +206,9 @@ Fragment在运行中的 Activity 中可见。
 *停止*
 
 Fragment不可见。宿主 Activity 已停止，或Fragment已从 Activity 中删除，但已添加到返回栈。 停止Fragment仍然处于活动状态（系统会保留所有状态和成员信息）。 不过，它对用户不再可见，如果 Activity 被终止，它也会被终止。
-同样与 Activity 一样，假使 Activity 的进程被终止，而您需要在重建 Activity 时恢复Fragment状态，您也可以使用 Bundle 保留Fragment的状态。您可以在Fragment的 onSaveInstanceState() 回调期间保存状态，并可在 onCreate()、onCreateView() 或 onActivityCreated() 期间恢复状态。如需了解有关保存状态的详细信息，请参阅Activity文档。
+同样与 Activity 一样，假使 Activity 的进程被终止，而需要在重建 Activity 时恢复Fragment状态，可以使用 Bundle 保留Fragment的状态。可以在Fragment的 onSaveInstanceState() 回调期间保存状态，并可在 onCreate()、onCreateView() 或 onActivityCreated() 期间恢复状态。如需了解有关保存状态的详细信息，请参阅Activity文档。
 
-Activity 生命周期与Fragment生命周期之间的最显著差异在于它们在其各自返回栈中的存储方式。 默认情况下，Activity 停止时会被放入由系统管理的 Activity 返回栈（以便用户通过“返回” 按钮回退到Activity，任务和返回栈对此做了阐述）。不过，仅当您在删除Fragment的事务执行期间通过调用 addToBackStack() 显式请求保存实例时，系统才会将Fragment放入由宿主 Activity 管理的返回栈。
+Activity 生命周期与Fragment生命周期之间的最显著差异在于它们在其各自返回栈中的存储方式。 默认情况下，Activity 停止时会被放入由系统管理的 Activity 返回栈（以便用户通过“返回” 按钮回退到Activity，任务和返回栈对此做了阐述）。不过，仅当在删除Fragment的事务执行期间通过调用 addToBackStack() 显式请求保存实例时，系统才会将Fragment放入由宿主 Activity 管理的返回栈。
 
 - fragmentTransaction.add(R.id.content_main, fragmentOne).commit();
 ~~~
@@ -290,7 +298,7 @@ FragmentOne@583021416: onDetach;
 ~~~
 返回操作，恢复到加载FragmentOne前的状态，没有加入回退栈，Activity直接退出。
 
-在其他方面，管理Fragment生命周期与管理 Activity 生命周期非常相似。 因此，管理 Activity 生命周期的做法同样适用于Fragment。 但您还需要了解 Activity 的生命周期对Fragment生命周期的影响。
+在其他方面，管理Fragment生命周期与管理 Activity 生命周期非常相似。 因此，管理 Activity 生命周期的做法同样适用于Fragment。 但还需要了解 Activity 的生命周期对Fragment生命周期的影响。
 
 >注意：如需 Fragment 内的某个 Context 对象，可以调用 getActivity()。但要注意，请仅在Fragment附加到 Activity 时调用 getActivity()。如果Fragment尚未附加，或在其生命周期结束期间分离，则 getActivity() 将返回 null。
 
@@ -310,8 +318,8 @@ Fragment所在的 Activity 的生命周期会影响Fragment的生命周期，其
 - `onDetach()`
 在取消Fragment与 Activity 的关联时调用。
 
-图 3 图示说明了受其宿主 Activity 影响的Fragment生命周期流。在该图中，您可以看到 Activity 的每个连续状态如何决定Fragment可以收到的回调方法。 例如，当 Activity 收到其 onCreate() 回调时，Activity 中的Fragment只会收到 onActivityCreated() 回调。
+图 3 图示说明了受其宿主 Activity 影响的Fragment生命周期流。在该图中，可以看到 Activity 的每个连续状态如何决定Fragment可以收到的回调方法。 例如，当 Activity 收到其 onCreate() 回调时，Activity 中的Fragment只会收到 onActivityCreated() 回调。
 
-一旦 Activity 达到恢复状态，您就可以意向 Activity 添加Fragment和删除其中的Fragment。 因此，只有当 Activity 处于恢复状态时，Fragment的生命周期才能独立变化。
+一旦 Activity 达到恢复状态，就可以意向 Activity 添加Fragment和删除其中的Fragment。 因此，只有当 Activity 处于恢复状态时，Fragment的生命周期才能独立变化。
 
 不过，当 Activity 离开恢复状态时，Fragment会在 Activity 的推动下再次经历其生命周期。
