@@ -10,21 +10,22 @@ import android.widget.ImageView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentOne extends BaseFragment {
-  FragmentOneAction fragmentOneAction;
+public class FragmentC extends BaseFragment {
 
-  public FragmentOne() {
+  ActionC actionC;
+
+  public FragmentC() {
   }
 
-  public interface FragmentOneAction {
-    void ActionOne();
+  public interface ActionC {
+    void actionC();
   }
 
   @Override public void onAttach(Activity activity) {
     super.onAttach(activity);
     try {
-      if (activity instanceof FragmentOneAction) {
-        fragmentOneAction = (FragmentOneAction) activity;
+      if (activity instanceof ActionC) {
+        actionC = (ActionC) activity;
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -34,11 +35,11 @@ public class FragmentOne extends BaseFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_one, container, false);
+    View view = inflater.inflate(R.layout.f_b, container, false);
     ImageView imageView = (ImageView) view.findViewById(R.id.btn);
     imageView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        fragmentOneAction.ActionOne();
+        actionC.actionC();
       }
     });
     return view;

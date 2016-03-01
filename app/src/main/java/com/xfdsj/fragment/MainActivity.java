@@ -7,20 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends Activity
-    implements FragmentOne.FragmentOneAction, FragmentTwo.FragmentTwoAction,
-    FragmentThree.FragmentThreeAction {
+    implements FragmentA.ActionA, FragmentB.ActionB, FragmentC.ActionC {
 
-  private FragmentOne fragmentOne;
-  private FragmentTwo fragmentTwo;
-  private FragmentThree fragmentThree;
+  private FragmentA fragmentA;
+  private FragmentB fragmentB;
+  private FragmentC fragmentC;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    fragmentOne = new FragmentOne();
+    fragmentA = new FragmentA();
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.add(R.id.content_main, fragmentOne).commit();
+    fragmentTransaction.add(R.id.content_main, fragmentA).commit();
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,27 +42,27 @@ public class MainActivity extends Activity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void ActionOne() {
-    if (fragmentTwo == null) {
-      fragmentTwo = new FragmentTwo();
+  @Override public void actionA() {
+    if (fragmentB == null) {
+      fragmentB = new FragmentB();
     }
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.replace(R.id.content_main, fragmentTwo).addToBackStack(null).commit();
+    fragmentTransaction.replace(R.id.content_main, fragmentB).addToBackStack(null).commit();
   }
 
-  @Override public void ActionTwo() {
-    if (fragmentThree == null) {
-      fragmentThree = new FragmentThree();
+  @Override public void actionB() {
+    if (fragmentC == null) {
+      fragmentC = new FragmentC();
     }
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.hide(fragmentTwo)
-        .add(R.id.content_main, fragmentThree)
+    fragmentTransaction.hide(fragmentB)
+        .add(R.id.content_main, fragmentC)
         .addToBackStack(null)
         .commit();
   }
 
-  @Override public void ActionThree() {
+  @Override public void actionC() {
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.detach(fragmentThree).addToBackStack(null).commit();
+    fragmentTransaction.detach(fragmentC).addToBackStack(null).commit();
   }
 }
