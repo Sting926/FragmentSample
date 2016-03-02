@@ -9,22 +9,22 @@
     tools:context=".FragmentB">
 
   <TextView
-      android:id="@+id/tv_btn"
+      android:id="@+id/tv_c"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
       android:layout_margin="@dimen/tv_margin"
       android:gravity="center"
       android:text="C"
-      android:textColor="@color/colorPrimaryDark"
+      android:textColor="@color/green"
       android:textSize="200sp"/>
 
   <EditText
-      android:id="@+id/et"
+      android:id="@+id/et_c"
       android:text="C EditText设置了id"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:layout_below="@id/tv_btn"/>
+      android:layout_below="@id/tv_c"/>
 
 </RelativeLayout>
