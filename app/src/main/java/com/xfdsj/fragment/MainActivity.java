@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends Activity
     implements FragmentA.ActionA, FragmentB.ActionB, FragmentC.ActionC {
@@ -64,5 +65,6 @@ public class MainActivity extends Activity
   @Override public void actionC() {
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.detach(fragmentC).addToBackStack(null).commit();
+    Toast.makeText(this, "FragmentC 已被 detach", Toast.LENGTH_SHORT).show();
   }
 }

@@ -8,19 +8,22 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".FragmentA">
 
-  <ImageView
-      android:id="@+id/btn"
-      android:layout_width="200dp"
-      android:layout_height="200dp"
+  <TextView
+      android:id="@+id/tv_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_centerInParent="true"
-      android:layout_margin="@dimen/fab_margin"
-      android:src="@drawable/one"/>
+      android:layout_margin="@dimen/tv_margin"
+      android:gravity="center"
+      android:text="A"
+      android:textColor="@color/colorPrimary"
+      android:textSize="200sp"/>
 
   <EditText
-      android:text="One"
+      android:text="A EditText没有设置id"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:layout_below="@id/btn"/>
+      android:layout_below="@id/tv_btn"/>
 
 </RelativeLayout>
