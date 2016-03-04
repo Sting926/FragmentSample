@@ -18,9 +18,11 @@ public class MainActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    fragmentA = new FragmentA();
-    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.add(R.id.content_main, fragmentA).commit();
+    if (savedInstanceState == null) {
+      fragmentA = new FragmentA();
+      FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+      fragmentTransaction.add(R.id.content_main, fragmentA).commit();
+    }
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
