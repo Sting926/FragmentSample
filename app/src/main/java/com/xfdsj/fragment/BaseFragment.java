@@ -49,6 +49,11 @@ public class BaseFragment extends Fragment {
     LogUtils.e(this, "onPause");
   }
 
+  @Override public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    LogUtils.e(this, "onSaveInstanceState");
+  }
+
   @Override public void onStop() {
     super.onStop();
     LogUtils.e(this, "onStop");
