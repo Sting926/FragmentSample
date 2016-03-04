@@ -3,6 +3,7 @@ package com.xfdsj.fragment;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,11 +19,18 @@ public class MainActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    if (savedInstanceState == null) {
+    fragmentA = (FragmentA) getFragmentManager().findFragmentByTag("A");
+    fragmentB = (FragmentB) getFragmentManager().findFragmentByTag("B");
+    fragmentC = (FragmentC) getFragmentManager().findFragmentByTag("C");
+    if (fragmentA == null) {
       fragmentA = new FragmentA();
       FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-      fragmentTransaction.add(R.id.content_main, fragmentA).commit();
+      fragmentTransaction.add(R.id.content_main, fragmentA, "A").commit();
     }
+  }
+
+  @Override protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,12 +53,16 @@ public class MainActivity extends Activity
     return super.onOptionsItemSelected(item);
   }
 
+  @Override public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    super.onSaveInstanceState(outState, outPersistentState);
+  }
+
   @Override public void actionA() {
     if (fragmentB == null) {
       fragmentB = new FragmentB();
     }
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-    fragmentTransaction.replace(R.id.content_main, fragmentB).addToBackStack(null).commit();
+    fragmentTransaction.replace(R.id.content_main, fragmentB, "B").addToBackStack(null).commit();
   }
 
   @Override public void actionB() {
@@ -59,7 +71,7 @@ public class MainActivity extends Activity
     }
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.hide(fragmentB)
-        .add(R.id.content_main, fragmentC)
+        .add(R.id.content_main, fragmentC, "C")
         .addToBackStack(null)
         .commit();
   }
