@@ -53,8 +53,9 @@ public class MainActivity extends Activity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-    super.onSaveInstanceState(outState, outPersistentState);
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    LogUtils.e(this, "onSaveInstanceState");
   }
 
   @Override public void actionA() {
