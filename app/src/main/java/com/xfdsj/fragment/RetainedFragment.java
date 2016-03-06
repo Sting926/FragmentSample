@@ -1,6 +1,7 @@
 package com.xfdsj.fragment;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 /**
@@ -15,5 +16,13 @@ public class RetainedFragment extends Fragment {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+
+  public void setPic(Bitmap b){
+
+  }
+
+  public Bitmap getPic(){
+    return null;
   }
 }

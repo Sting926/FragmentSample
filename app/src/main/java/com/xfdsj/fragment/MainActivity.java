@@ -19,6 +19,11 @@ public class MainActivity extends Activity {
     startActivity(intent);
   }
 
+  @OnClick(R.id.btn_fragment_retain) void fragmentRetain() {
+    Intent intent = new Intent(this, FragmentRetainDataActivity.class);
+    startActivity(intent);
+  }
+
   @Override protected void onDestroy() {
     super.onDestroy();
     ButterKnife.unbind(this);
