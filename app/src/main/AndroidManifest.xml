@@ -15,10 +15,11 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity
-        android:name=".FragmentLifeActivity">
+    <activity android:name=".FragmentLifeActivity">
     </activity>
     <activity android:name=".FragmentMenuActivity">
+    </activity>
+    <activity android:name=".FragmentRetainDataActivity">
     </activity>
   </application>
 
