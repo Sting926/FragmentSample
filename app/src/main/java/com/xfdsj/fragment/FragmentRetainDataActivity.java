@@ -26,7 +26,7 @@ public class FragmentRetainDataActivity extends Activity {
     }
   }
 
-  @OnClick(R.id.iv_pic) void picClick(){
+  @OnClick(R.id.iv_pic) void picClick() {
     ProgressDialogFragment progressDialog = new ProgressDialogFragment();
     progressDialog.show(getFragmentManager(), "dialog");
   }
