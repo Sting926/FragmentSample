@@ -2,6 +2,8 @@ package com.xfdsj.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FragmentRetainDataActivity extends Activity {
 
@@ -10,6 +12,7 @@ public class FragmentRetainDataActivity extends Activity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.a_fragment_retain_data);
+    ButterKnife.bind(this);
     // find the retained fragment on activity restarts
     retainedFragment = (RetainedFragment) getFragmentManager().findFragmentByTag("data");
 
@@ -23,8 +26,14 @@ public class FragmentRetainDataActivity extends Activity {
     }
   }
 
+  @OnClick(R.id.iv_pic) void picClick(){
+    ProgressDialogFragment progressDialog = new ProgressDialogFragment();
+    progressDialog.show(getFragmentManager(), "dialog");
+  }
+
   @Override protected void onDestroy() {
     super.onDestroy();
     retainedFragment.setPic(null);
+    ButterKnife.unbind(this);
   }
 }
