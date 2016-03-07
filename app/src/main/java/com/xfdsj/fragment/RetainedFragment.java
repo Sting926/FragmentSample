@@ -7,22 +7,20 @@ import android.os.Bundle;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RetainedFragment extends Fragment {
+public class RetainedFragment extends BaseFragment {
+
+  private Bitmap mBitmap;
 
   public RetainedFragment() {
     // Required empty public constructor
     setRetainInstance(true);
   }
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
-
-  public void setPic(Bitmap b){
-
+  public void setPic(Bitmap bitmap){
+    mBitmap = bitmap;
   }
 
   public Bitmap getPic(){
-    return null;
+    return mBitmap;
   }
 }
