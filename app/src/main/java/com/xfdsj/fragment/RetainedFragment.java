@@ -40,6 +40,11 @@ public class RetainedFragment extends BaseFragment {
     }
   }
 
+  @Override public void onDetach() {
+    super.onDetach();
+    loadComplete = null;
+  }
+
   public void loadPic(String url) {
     OkHttpClient client = new OkHttpClient();
     Request request = new Request.Builder().url(url).build();
@@ -51,7 +56,7 @@ public class RetainedFragment extends BaseFragment {
       @Override public void onResponse(Call call, Response response) throws IOException {
         final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
         try {
-          Thread.sleep(3000);
+          Thread.sleep(5000);
           mBitmap = bitmap;
           if (loadComplete != null) {
             loadComplete.onComplete();
