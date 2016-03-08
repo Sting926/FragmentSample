@@ -21,7 +21,7 @@ public class RetainedFragment extends BaseFragment {
   private LoadComplete loadComplete;
 
   public interface LoadComplete {
-    public void onComplete();
+    void onComplete();
   }
 
   public RetainedFragment() {
