@@ -12,7 +12,7 @@ public class FragmentMenuActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.a_fragment_menu);
 
-    if (savedInstanceState != null) {
+    if (savedInstanceState == null) {
       MenuFragment menuFragment = new MenuFragment();
       getFragmentManager().beginTransaction().add(R.id.content_main, menuFragment).commit();
     }
