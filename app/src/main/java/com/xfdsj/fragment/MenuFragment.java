@@ -47,8 +47,10 @@ public class MenuFragment extends ListFragment {
       @Override public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()){
           case R.id.action_context_menu1:
+            mode.finish();
             return true;
           case R.id.action_context_menu2:
+            mode.finish();
             return true;
         }
         return false;
