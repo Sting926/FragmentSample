@@ -3,6 +3,7 @@ package com.xfdsj.fragment;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.Toast;
 
 public class FragmentLifeActivity extends Activity
@@ -14,6 +15,7 @@ public class FragmentLifeActivity extends Activity
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.a_fragment_life);
 
     fragmentA = (FragmentA) getFragmentManager().findFragmentByTag("A");
