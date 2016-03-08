@@ -29,10 +29,11 @@ public class MenuFragment extends ListFragment {
     data.add("RxAndroid");
     data.add("Dagger2");
     data.add("Retrofit");
-    setListAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, data));
+    setListAdapter(
+        new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, data));
     ListView listView = getListView();
     listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-    listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener(){
+    listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
       @Override public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater = mode.getMenuInflater();
@@ -45,7 +46,7 @@ public class MenuFragment extends ListFragment {
       }
 
       @Override public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
           case R.id.action_context_menu1:
             mode.finish();
             return true;
@@ -70,7 +71,6 @@ public class MenuFragment extends ListFragment {
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.menu_fragment, menu);
-    LogUtils.e(this, "onCreateOptionsMenu");
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
