@@ -25,16 +25,14 @@ public class FragmentMenuActivity extends Activity {
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-
-    if (id == R.id.action_settings) {
-      Toast.makeText(this, "Activity Menu", Toast.LENGTH_SHORT).show();
-      return true;
-    }else if (id == R.id.action_fragment_menu2){
-      Toast.makeText(this, "Activity 截胡菜单", Toast.LENGTH_SHORT).show();
-      return true;
+    switch (item.getItemId()) {
+      case R.id.action_settings:
+        Toast.makeText(this, "Activity Menu", Toast.LENGTH_SHORT).show();
+        return true;
+      case R.id.action_fragment_menu2:
+        Toast.makeText(this, "Activity 截胡菜单", Toast.LENGTH_SHORT).show();
+        return true;
     }
-
     return super.onOptionsItemSelected(item);
   }
 }

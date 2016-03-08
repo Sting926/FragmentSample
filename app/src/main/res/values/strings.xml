@@ -3,4 +3,6 @@
   <string name="action_settings">Activity Menu</string>
   <string name="action_fragment_menu1">Fragment Menu1</string>
   <string name="action_fragment_menu2">Fragment Menu2</string>
+  <string name="action_context_menu1">Edit</string>
+  <string name="action_context_menu2">Delete</string>
 </resources>
