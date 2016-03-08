@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class FragmentMenuActivity extends Activity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.a_fragment_menu);
+
+    if (savedInstanceState != null) {
+      MenuFragment menuFragment = new MenuFragment();
+      getFragmentManager().beginTransaction().add(R.id.content_main, menuFragment).commit();
+    }
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -26,6 +32,7 @@ public class FragmentMenuActivity extends Activity {
 
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
+      Toast.makeText(this, "Activity Menu", Toast.LENGTH_SHORT).show();
       return true;
     }
 

@@ -10,4 +10,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.xfdsj.fragment.FragmentMenuActivity">
 
+  <FrameLayout
+      android:id="@+id/content_main"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"/>
 </RelativeLayout>

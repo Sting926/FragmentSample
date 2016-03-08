@@ -1,4 +1,6 @@
 <resources>
   <string name="app_name">FragmentSample</string>
-  <string name="action_settings">Settings</string>
+  <string name="action_settings">Activity Menu</string>
+  <string name="action_fragment_menu1">Fragment Menu1</string>
+  <string name="action_fragment_menu2">Fragment Menu2</string>
 </resources>

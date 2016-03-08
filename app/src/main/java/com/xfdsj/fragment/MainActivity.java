@@ -24,6 +24,11 @@ public class MainActivity extends Activity {
     startActivity(intent);
   }
 
+  @OnClick(R.id.btn_fragment_menu) void fragmentMenu(){
+    Intent intent = new Intent(this, FragmentMenuActivity.class);
+    startActivity(intent);
+  }
+
   @Override protected void onDestroy() {
     super.onDestroy();
     ButterKnife.unbind(this);
