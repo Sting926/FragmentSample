@@ -25,14 +25,13 @@ public class FragmentMenuActivity extends Activity {
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
     if (id == R.id.action_settings) {
       Toast.makeText(this, "Activity Menu", Toast.LENGTH_SHORT).show();
+      return true;
+    }else if (id == R.id.action_fragment_menu2){
+      Toast.makeText(this, "Activity 截胡菜单", Toast.LENGTH_SHORT).show();
       return true;
     }
 

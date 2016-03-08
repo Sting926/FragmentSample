@@ -1,23 +1,32 @@
 package com.xfdsj.fragment;
 
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MenuFragment extends BaseFragment {
+public class MenuFragment extends ListFragment {
 
   public MenuFragment() {
     setHasOptionsMenu(true);
   }
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setHasOptionsMenu(true);
+  @Override public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    List<String> data = new ArrayList<>();
+    data.add("RxJava");
+    data.add("RxAndroid");
+    data.add("Dagger2");
+    data.add("Retrofit");
+    setListAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data));
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
